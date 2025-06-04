@@ -1,94 +1,103 @@
 # Cloud-Based Skin Cancer Detection Using Deep Learning and Scalable AWS Infrastructure
 
-A scalable, cloud-native AI system that detects skin cancer from dermatoscopic images using a fine-tuned Vision Transformer (ViT) model deployed on AWS. The project combines deep learning with Amazon S3, AWS Lambda, SageMaker, and Streamlit for a cost-effective and real-time diagnostic pipeline.
+A real-time, cloud-native skin cancer detection system using a fine-tuned Vision Transformer (ViT), built on the AWS AI ecosystem and accessible via a Streamlit interface. This end-to-end solution demonstrates how deep learning and serverless infrastructure can be combined to deliver scalable, low-latency, and cost-effective healthcare tools.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 63814a934df32625094dccda5727bd7d7734c8d9
+---
+
+## 🧠 Project Overview
+
+Skin cancer is one of the most prevalent forms of cancer, with over 1.5 million cases reported annually. This project addresses the need for accessible early diagnosis using:
+
+- A **Vision Transformer (ViT)** model from Hugging Face
+- Deployed on **Amazon SageMaker**
+- Triggered by **AWS Lambda**
+- Served via **Streamlit**
+- Integrated with **Amazon S3** and **CloudWatch**
+
+This architecture aligns with the AWS Well-Architected Framework and uses scalable, serverless design principles.
+
+---
+
+## 🚀 Technologies Used
+
+| Component     | Tool / Service         |
+|---------------|------------------------|
+| Model         | ViT (Hugging Face, fine-tuned) |
+| Deployment    | Amazon SageMaker SDK   |
+| Event Logic   | AWS Lambda + Pillow Layer |
+| Storage       | Amazon S3              |
+| Monitoring    | AWS CloudWatch         |
+| Frontend      | Streamlit              |
+| Roles/Security| AWS IAM                |
+
+---
+
 ## 📁 Project Structure
 
-- `lambdafunctioncode/`  
-  Contains the AWS Lambda function that preprocesses uploaded images and invokes the SageMaker model.
+| Folder                          | Description                                                      |
+|----------------------------------|------------------------------------------------------------------|
+| `lambdafunctioncode/`            | Lambda function code for image preprocessing and inference call |
+| `sagemakernotebookwithcode/`     | Notebook for training and deploying the ViT model               |
+| `streamlit app code/`            | Frontend UI to upload and display predictions                  |
+| `screenshots/`                   | Architecture diagrams, output samples, and UI screenshots       |
+| `requirements.txt`               | Python package dependencies                                     |
+| `README.md`                      | This documentation                                              |
+| `LICENSE`                        | MIT License                                                     |
 
-- `sagemakernotebookwithcode/`  
-  Jupyter notebook for fine-tuning and deploying the Vision Transformer (ViT) model on SageMaker.
+---
 
-- `streamlit app code/`  
-  Streamlit web app where users can upload images and see real-time classification results.
+## 🧪 How It Works
 
-- `screenshots/`  
-  Visual references of architecture, cloud configurations, and output predictions.
+1. **User uploads an image** via the Streamlit app
+2. Image is saved to **S3 (`uploads/`)**
+3. **S3 event triggers** the Lambda function
+4. Lambda:
+   - Converts image to RGB
+   - Resizes to 224×224
+   - Sends image to SageMaker
+5. **SageMaker ViT model** classifies the image into 7 skin condition categories
+6. Prediction (JSON) is saved in S3 (`predictions/`) and shown in the UI
 
-- `requirements.txt`  
-  Required Python packages for running the project locally or in cloud environments.
+---
 
-- `README.md`  
-  Documentation explaining the project, architecture, and usage instructions.
+## 🖼️ Screenshot Highlights
 
-- `LICENSE`  
-  MIT license for open-source usage.
+- ✅ AWS Architecture Diagram
+- ✅ Lambda setup and logs
+- ✅ SageMaker Notebook and Endpoint
+- ✅ S3 bucket structure
+- ✅ Real Streamlit UI showing top prediction with confidence
 
+Check the [`screenshots/`](./screenshots/) folder for visuals.
 
+---
 
-<<<<<<< HEAD
->>>>>>> 63814a934df32625094dccda5727bd7d7734c8d9
-=======
->>>>>>> 63814a934df32625094dccda5727bd7d7734c8d9
-## 📌 Project Overview
-Skin cancer affects millions worldwide, and early detection is crucial. This solution enables users to upload images of skin lesions and receive classification results in real time through a user-friendly web interface. The project aligns with the AWS Well-Architected Framework to ensure operational excellence and scalability.
+## 🧠 Model Details
 
-## ⚙️ Architecture
-- **Frontend:** Streamlit web app for user interaction
-- **Storage:** Amazon S3 for image and result storage
-- **Processing:** AWS Lambda for image preprocessing and inference orchestration
-- **Inference:** Amazon SageMaker hosting a Hugging Face ViT model
-- **Monitoring:** AWS CloudWatch for logging and billing alerts
-
-## 🧠 Model
-- **Model Type:** Vision Transformer (ViT)
-- **Source:** Fine-tuned on HAM10000 dataset via Hugging Face (`Anwarkh1/Skin_Cancer-Image_Classification`)
-- **Classes:** 
-  - Actinic Keratoses
-  - Basal Cell Carcinoma
-  - Benign Keratosis-like Lesions
+- **Base**: Vision Transformer (ViT) pretrained on ImageNet-21k
+- **Fine-tuned on**: [HAM10000-based dataset](https://huggingface.co/datasets/marmal88/skin_cancer)
+- **Target Classes**:
+  - Actinic keratoses
+  - Basal cell carcinoma
+  - Benign keratosis-like lesions
   - Dermatofibroma
   - Melanoma
-  - Melanocytic Nevi
-  - Vascular Lesions
+  - Melanocytic nevi
+  - Vascular lesions
+- **Validation Accuracy**: ~96.95%
+- **Training**: 5 epochs, Adam optimizer, learning rate 1e-4, batch size 32
 
-## 🚀 How It Works
-1. User uploads a skin lesion image via Streamlit.
-2. Image is saved in the `uploads/` folder of an S3 bucket.
-3. Upload event triggers a Lambda function:
-   - Converts to RGB
-   - Resizes to 224×224
-   - Sends to SageMaker endpoint
-4. SageMaker returns classification as JSON with confidence scores.
-5. Output saved to `predictions/` folder and displayed in UI.
+---
 
-## 🧪 Installation & Deployment
+## ⚙️ Setup Instructions
 
 ```bash
-git clone https://github.com/yourusername/skin-cancer-detector.git
-cd skin-cancer-detector
+# Clone the repo
+git clone https://github.com/StevenMascarenhas/Cloud-Based-Skin-Cancer-Detection-Using-Deep-Learning-and-AWS.git
+cd Cloud-Based-Skin-Cancer-Detection-Using-Deep-Learning-and-AWS
+
+# Install dependencies
 pip install -r requirements.txt
-streamlit run app.py
-```
 
-## 🔐 Security
-IAM roles follow the principle of least privilege. CloudWatch monitors usage and billing alarms ensure resource control within free-tier limits.
-
-## 📈 Scalability
-- Serverless Lambda allows parallel processing.
-- S3 provides high throughput for millions of objects.
-- Future-ready for integration with DynamoDB and Amazon Athena for analytics.
-
-## 📄 License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## 👤 Author
-**Steven Gerard Mascarenhas**  
-Student ID: 24044407  
-Module: CS5024 - Theory and Practice of Advanced AI Ecosystems
+# Run the Streamlit app (if running locally)
+streamlit run "streamlit app code/app.py"
