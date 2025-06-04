@@ -2,6 +2,31 @@
 
 A scalable, cloud-native AI system that detects skin cancer from dermatoscopic images using a fine-tuned Vision Transformer (ViT) model deployed on AWS. The project combines deep learning with Amazon S3, AWS Lambda, SageMaker, and Streamlit for a cost-effective and real-time diagnostic pipeline.
 
+## 📁 Project Structure
+
+- `lambdafunctioncode/`  
+  Contains the AWS Lambda function that preprocesses uploaded images and invokes the SageMaker model.
+
+- `sagemakernotebookwithcode/`  
+  Jupyter notebook for fine-tuning and deploying the Vision Transformer (ViT) model on SageMaker.
+
+- `streamlit app code/`  
+  Streamlit web app where users can upload images and see real-time classification results.
+
+- `screenshots/`  
+  Visual references of architecture, cloud configurations, and output predictions.
+
+- `requirements.txt`  
+  Required Python packages for running the project locally or in cloud environments.
+
+- `README.md`  
+  Documentation explaining the project, architecture, and usage instructions.
+
+- `LICENSE`  
+  MIT license for open-source usage.
+
+
+
 ## 📌 Project Overview
 Skin cancer affects millions worldwide, and early detection is crucial. This solution enables users to upload images of skin lesions and receive classification results in real time through a user-friendly web interface. The project aligns with the AWS Well-Architected Framework to ensure operational excellence and scalability.
 
