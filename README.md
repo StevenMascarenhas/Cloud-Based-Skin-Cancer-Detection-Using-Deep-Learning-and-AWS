@@ -1,90 +1,64 @@
-# Cloud-Based Skin Cancer Detection Using Deep Learning and Scalable AWS Infrastructure
+# Cloud-Based Skin Cancer Detection Using Deep Learning and AWS
 
-A scalable, cloud-native AI system that detects skin cancer from dermatoscopic images using a fine-tuned Vision Transformer (ViT) model deployed on AWS. The project combines deep learning with Amazon S3, AWS Lambda, SageMaker, and Streamlit for a cost-effective and real-time diagnostic pipeline.
+A cloud-native AI pipeline for detecting skin cancer from dermatoscopic images using a fine-tuned Vision Transformer (ViT) model. This project integrates AWS Lambda, SageMaker, S3, and Streamlit to provide real-time predictions via a lightweight, scalable architecture.
 
+---
+
+## 🧠 Overview
+
+Skin cancer is one of the most common cancers globally, and early detection is crucial. This project automates the diagnosis process using a pretrained ViT model deployed on AWS. Users interact via a Streamlit frontend and receive predictions in real time.
+
+---
+
+## 🚀 Technologies Used
+
+- **Model**: Vision Transformer (HuggingFace)
+- **Frontend**: Streamlit
+- **Cloud Services**: 
+  - Amazon S3 (image & result storage)
+  - AWS Lambda (image preprocessing, inference trigger)
+  - Amazon SageMaker (model hosting)
+  - AWS CloudWatch (monitoring/logging)
+
+---
 
 ## 📁 Project Structure
 
-- `lambdafunctioncode/`  
-  Contains the AWS Lambda function that preprocesses uploaded images and invokes the SageMaker model.
+| Folder                          | Description                                                                |
+|----------------------------------|----------------------------------------------------------------------------|
+| `lambdafunctioncode/`            | AWS Lambda function to preprocess images and call SageMaker endpoint       |
+| `sagemakernotebookwithcode/`     | Jupyter notebook for training & deploying the ViT model on SageMaker       |
+| `streamlit app code/`            | Streamlit frontend for user uploads and displaying predictions             |
+| `screenshots/`                   | AWS architecture diagrams and sample outputs                               |
+| `requirements.txt`               | Required Python packages                                                   |
+| `README.md`                      | Project overview and documentation                                         |
+| `LICENSE`                        | MIT License for open-source use                                            |
+| `.gitignore`                     | Files and folders excluded from version control                            |
 
-- `sagemakernotebookwithcode/`  
-  Jupyter notebook for fine-tuning and deploying the Vision Transformer (ViT) model on SageMaker.
+---
 
-- `streamlit app code/`  
-  Streamlit web app where users can upload images and see real-time classification results.
+## 🧪 How It Works
 
-- `screenshots/`  
-  Visual references of architecture, cloud configurations, and output predictions.
+1. User uploads an image via Streamlit
+2. Image is saved to S3 (`uploads/` folder)
+3. S3 event triggers the Lambda function:
+   - Converts image to RGB
+   - Resizes to 224x224
+   - Sends payload to SageMaker endpoint
+4. ViT model returns prediction as JSON
+5. Output is saved to `predictions/` in S3 and shown in the app
 
-- `requirements.txt`  
-  Required Python packages for running the project locally or in cloud environments.
+---
 
-- `README.md`  
-  Documentation explaining the project, architecture, and usage instructions.
-
-- `LICENSE`  
-  MIT license for open-source usage.
-
-
-
-<<<<<<< HEAD
->>>>>>> 63814a934df32625094dccda5727bd7d7734c8d9
-=======
->>>>>>> 63814a934df32625094dccda5727bd7d7734c8d9
-## 📌 Project Overview
-Skin cancer affects millions worldwide, and early detection is crucial. This solution enables users to upload images of skin lesions and receive classification results in real time through a user-friendly web interface. The project aligns with the AWS Well-Architected Framework to ensure operational excellence and scalability.
-
-## ⚙️ Architecture
-- **Frontend:** Streamlit web app for user interaction
-- **Storage:** Amazon S3 for image and result storage
-- **Processing:** AWS Lambda for image preprocessing and inference orchestration
-- **Inference:** Amazon SageMaker hosting a Hugging Face ViT model
-- **Monitoring:** AWS CloudWatch for logging and billing alerts
-
-## 🧠 Model
-- **Model Type:** Vision Transformer (ViT)
-- **Source:** Fine-tuned on HAM10000 dataset via Hugging Face (`Anwarkh1/Skin_Cancer-Image_Classification`)
-- **Classes:** 
-  - Actinic Keratoses
-  - Basal Cell Carcinoma
-  - Benign Keratosis-like Lesions
-  - Dermatofibroma
-  - Melanoma
-  - Melanocytic Nevi
-  - Vascular Lesions
-
-## 🚀 How It Works
-1. User uploads a skin lesion image via Streamlit.
-2. Image is saved in the `uploads/` folder of an S3 bucket.
-3. Upload event triggers a Lambda function:
-   - Converts to RGB
-   - Resizes to 224×224
-   - Sends to SageMaker endpoint
-4. SageMaker returns classification as JSON with confidence scores.
-5. Output saved to `predictions/` folder and displayed in UI.
-
-## 🧪 Installation & Deployment
+## 🧰 Setup Instructions
 
 ```bash
-git clone https://github.com/yourusername/skin-cancer-detector.git
-cd skin-cancer-detector
+# Clone the repository
+git clone https://github.com/StevenMascarenhas/Cloud-Based-Skin-Cancer-Detection-Using-Deep-Learning-and-AWS.git
+cd Cloud-Based-Skin-Cancer-Detection-Using-Deep-Learning-and-AWS
+
+# Install dependencies
 pip install -r requirements.txt
-streamlit run app.py
-```
 
-## 🔐 Security
-IAM roles follow the principle of least privilege. CloudWatch monitors usage and billing alarms ensure resource control within free-tier limits.
-
-## 📈 Scalability
-- Serverless Lambda allows parallel processing.
-- S3 provides high throughput for millions of objects.
-- Future-ready for integration with DynamoDB and Amazon Athena for analytics.
-
-## 📄 License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## 👤 Author
-**Steven Gerard Mascarenhas**  
-Student ID: 24044407  
-Module: CS5024 - Theory and Practice of Advanced AI Ecosystems
+# Run Streamlit app locally (if available)
+streamlit run "streamlit app code/app.py"
