@@ -36,47 +36,44 @@ This architecture aligns with the AWS Well-Architected Framework and uses scalab
 
 | Folder                          | Description                                                      |
 |----------------------------------|------------------------------------------------------------------|
-| `lambdafunctioncode/`            | Lambda function code for image preprocessing and inference call |
-| `sagemakernotebookwithcode/`     | Notebook for training and deploying the ViT model               |
-| `streamlit app code/`            | Frontend UI to upload and display predictions                  |
-| `screenshots/`                   | Architecture diagrams, output samples, and UI screenshots       |
-| `requirements.txt`               | Python package dependencies                                     |
-| `README.md`                      | This documentation                                              |
-| `LICENSE`                        | MIT License                                                     |
+| `lambdafunctioncode/`            | AWS Lambda function to preprocess images and call SageMaker     |
+| `sagemakernotebookwithcode/`     | Jupyter notebook to train and deploy ViT model                  |
+| `streamlit app code/`            | Frontend UI built with Streamlit                               |
+| `screenshots/`                   | AWS setup screenshots and system output                        |
+| `requirements.txt`               | Python dependencies for local/Streamlit deployment              |
+| `CS5024_Project_Report_Steven_Mascarenhas.pdf` | Full academic report documenting the project                |
+| `README.md`                      | This documentation                                               |
+| `LICENSE`                        | MIT License                                                      |
 
 ---
 
 ## 🧪 How It Works
 
-1. **User uploads an image** via the Streamlit app
-2. Image is saved to **S3 (`uploads/`)**
-3. **S3 event triggers** the Lambda function
-4. Lambda:
-   - Converts image to RGB
-   - Resizes to 224×224
-   - Sends image to SageMaker
-5. **SageMaker ViT model** classifies the image into 7 skin condition categories
-6. Prediction (JSON) is saved in S3 (`predictions/`) and shown in the UI
+1. User uploads a dermatoscopic image via the Streamlit app
+2. Image is stored in S3 under `uploads/`
+3. AWS Lambda is triggered:
+   - Image is resized, formatted (RGB, 224×224)
+   - Forwarded to SageMaker endpoint
+4. SageMaker ViT model returns the prediction
+5. Result is saved to `predictions/` in S3 and displayed to the user
 
 ---
 
 ## 🖼️ Screenshot Highlights
 
-- ✅ AWS Architecture Diagram
-- ✅ Lambda setup and logs
-- ✅ SageMaker Notebook and Endpoint
-- ✅ S3 bucket structure
-- ✅ Real Streamlit UI showing top prediction with confidence
-
-Check the [`screenshots/`](./screenshots/) folder for visuals.
+Located in the `screenshots/` folder:
+- AWS Lambda function
+- SageMaker deployment and notebook
+- Architecture diagram
+- Streamlit UI and predictions
 
 ---
 
-## 🧠 Model Details
+## 🧠 Model Summary
 
-- **Base**: Vision Transformer (ViT) pretrained on ImageNet-21k
-- **Fine-tuned on**: [HAM10000-based dataset](https://huggingface.co/datasets/marmal88/skin_cancer)
-- **Target Classes**:
+- **Base**: Vision Transformer (ViT) from Hugging Face
+- **Fine-tuned on**: HAM10000 dataset (`marmal88/skin_cancer`)
+- **Classes**:
   - Actinic keratoses
   - Basal cell carcinoma
   - Benign keratosis-like lesions
@@ -84,12 +81,12 @@ Check the [`screenshots/`](./screenshots/) folder for visuals.
   - Melanoma
   - Melanocytic nevi
   - Vascular lesions
-- **Validation Accuracy**: ~96.95%
-- **Training**: 5 epochs, Adam optimizer, learning rate 1e-4, batch size 32
+- **Accuracy**: 96.95% (validation)
+- **Training**: 5 epochs, Adam optimizer, lr=1e-4, batch size=32
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ Local Setup
 
 ```bash
 # Clone the repo
@@ -99,5 +96,5 @@ cd Cloud-Based-Skin-Cancer-Detection-Using-Deep-Learning-and-AWS
 # Install dependencies
 pip install -r requirements.txt
 
-# Run the Streamlit app (if running locally)
+# Run Streamlit app
 streamlit run "streamlit app code/app.py"
