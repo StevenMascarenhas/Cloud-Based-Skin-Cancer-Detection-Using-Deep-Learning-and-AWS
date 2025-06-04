@@ -2,11 +2,7 @@
 
 A scalable, cloud-native AI system that detects skin cancer from dermatoscopic images using a fine-tuned Vision Transformer (ViT) model deployed on AWS. The project combines deep learning with Amazon S3, AWS Lambda, SageMaker, and Streamlit for a cost-effective and real-time diagnostic pipeline.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 63814a934df32625094dccda5727bd7d7734c8d9
+
 ## 📁 Project Structure
 
 - `lambdafunctioncode/`  
