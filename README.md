@@ -122,8 +122,3 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## 👨‍🎓 Author
 Steven Gerard Mascarenhas
 
-Student ID: 24044407
-
-University of Limerick
-
-Module: CS5024 – Theory and Practice of Advanced AI Ecosystems
